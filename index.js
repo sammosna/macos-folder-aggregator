@@ -5,7 +5,7 @@ import path, { relative, resolve } from "node:path"
 import directoryTree from "directory-tree";
 import child from "child_process"
 import { execSync } from "node:child_process";
-import { extractPaths } from "./utils";
+import { extractPaths } from "./utils.js";
 
 // const sources = [
 //     {
