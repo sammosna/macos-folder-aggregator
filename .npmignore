@@ -1,2 +1,5 @@
 *
 !assets
+!index.js
+!generate.js
+!clean.js
