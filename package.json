@@ -1,6 +1,6 @@
 {
   "name": "@sammosna/macos-folder-aggregator",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "private": false,
   "module": "index.js",
   "type": "module",
