@@ -14,8 +14,8 @@
     "dev": "bun --watch index.js"
   },
   "bin": {
-    "aggregator": "./generate.js",
-    "aggregator-clean": "./clean.js"
+    "aggregator": "generate.js",
+    "aggregator-clean": "clean.js"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
