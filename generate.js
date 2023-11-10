@@ -19,7 +19,7 @@ const sources = process.argv.slice(2)
 
 if (!sources.length) throw new Error("Set at least one source")
 
-if (!existsSync(resolve(__dirname, "bin/sync"))) execSync(`cd ${__dirname} && bun run build:sync`)
+// if (!existsSync(resolve(__dirname, "bin/sync"))) execSync(`cd ${__dirname} && bun run build:sync`)
 
 
 const config = {
@@ -36,13 +36,8 @@ if (!existsSync(configDirPath)) mkdirSync(configDirPath)
 
 writeFileSync(configPath, JSON.stringify(config, null, "\t"))
 
-// console.log("config", config);
 
-// console.log("Copy");
-// console.log("from", resolve(__dirname, "sync"));
-// console.log("to", resolve(configDirPath, "sync"));
-copyFileSync(resolve(__dirname, "bin/sync"), resolve(configDirPath, "sync"))
-// console.log("r", r);
+// copyFileSync(resolve(__dirname, "bin/sync"), resolve(configDirPath, "sync"))
 
 console.log(execSync("ls", { encoding: "utf-8" }));
 
