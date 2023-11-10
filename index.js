@@ -31,6 +31,12 @@ const configPath = resolve(dest, "\.sync/config.json");
 if (!existsSync(configPath)) throw new Error("Missing config file")
 
 
+const brewPath = execSync("echo $(brew --prefix)", { encoding: "utf-8" }).trim()
+if (!existsSync(brewPath)) throw new Error("Please install homebrew")
+
+const execTag = resolve(brewPath, "bin/tag")
+if (!existsSync(execTag)) throw new Error("Please install `tag` via `brew install tag`")
+
 // const execTag = execSync("/usr/bin/env tag", { encoding: "utf-8" }).trim()
 // console.log("execTag", execTag);
 
@@ -106,7 +112,7 @@ await Promise.all(sTree
     .filter(s => {
         return fs.existsSync(path.resolve(dest, s.path)) && !s.isDotfile
     })
-    .map(s => child.exec(`/usr/local/Cellar/tag/0.10_1/bin/tag --add ${[...tags, s.tags].join(",")} "${path.resolve(dest, s.path)}"`))
+    .map(s => child.exec(`${execTag} --add ${[...tags, s.tags].join(",")} "${path.resolve(dest, s.path)}"`))
 )
 
 // for (const s of sTree) {
