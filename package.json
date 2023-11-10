@@ -12,7 +12,8 @@
     "build:generate": "bun build ./generate.js --compile --outfile bin/generate",
     "build:clean": "bun build ./clean.js --compile --outfile bin/clean",
     "build": "bun run build:generate && bun run build:clean",
-    "dev": "bun --watch index.js"
+    "dev": "bun --watch index.js",
+    "postinstall": "bun build ./index.js --compile --outfile bin/sync"
   },
   "bin": {
     "aggregator": "generate.js",
