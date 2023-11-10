@@ -12,7 +12,7 @@ const pwd = execSync("pwd", { encoding: "utf-8" }).trim()
 const configDirPath = resolve(pwd, ".sync");
 const configPath = resolve(configDirPath, "config.json")
 
-const tags = ["link"]
+const tags = []
 
 console.log("pwd", pwd);
 const sources = process.argv.slice(2)
