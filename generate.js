@@ -7,11 +7,8 @@ import { fileURLToPath } from 'url';
 import { homedir } from "node:os";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
 const scriptsPath = resolve(homedir(), "Library/Scripts/Folder Action Scripts")
-
 const pwd = execSync("pwd", { encoding: "utf-8" }).trim()
-
 const configDirPath = resolve(pwd, ".sync");
 const configPath = resolve(configDirPath, "config.json")
 
@@ -21,6 +18,8 @@ console.log("pwd", pwd);
 const sources = process.argv.slice(2)
 
 if (!sources.length) throw new Error("Set at least one source")
+
+if (!existsSync(resolve(__dirname, "bin/sync"))) execSync(`cd ${__dirname} && bun run build:sync`)
 
 
 const config = {
@@ -54,6 +53,9 @@ console.log("scriptsPath", scriptsPath);
 if (!existsSync(scriptsPath)) mkdirSync(scriptsPath, { recursive: true })
 // if (!existsSync(resolve(scriptsPath, "Aggregator.scpt")))
 copyFileSync(resolve(__dirname, "assets/Aggregator.scpt"), resolve(scriptsPath, "Aggregator.scpt"))
+// copyFileSync(resolve(__dirname, "assets/icon.png"), resolve(configDirPath, "icon.png"))
+// console.log(resolve(__dirname, "assets/icon.png"));
+// console.log(resolve(scriptsPath, "icon.png"));
 // #endregion AGGREGATOR.SCP
 
 
