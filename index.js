@@ -5,7 +5,7 @@ import path, { relative, resolve } from "node:path"
 import directoryTree from "directory-tree";
 import child from "child_process"
 import { execSync } from "node:child_process";
-import { extractPaths } from "./utils";
+import { extractPaths } from "./utils.js";
 
 // const sources = [
 //     {
@@ -42,14 +42,21 @@ if (!existsSync(execTag)) throw new Error("Please install `tag` via `brew instal
 
 
 
-const { sources, dest: configDest, tags } = JSON.parse(readFileSync(configPath))
+let { sources, dest: configDest, tags } = JSON.parse(readFileSync(configPath))
+sources = sources.map(s => ({
+    ...s,
+    path: resolve(s.path)
+}))
+
+dest = resolve(dest);
+configDest = resolve(configDest);
 
 console.log("dest", dest);
 console.log("configDest", configDest);
 console.log("tags", tags);
 
 
-if (relative(dest ,configDest) !== "") throw new Error("Dest mismatch!")
+if (relative(dest, configDest) !== "") throw new Error("Dest mismatch!")
 
 
 const sTree = sources
@@ -112,8 +119,19 @@ await Promise.all(sTree
     .filter(s => {
         return fs.existsSync(path.resolve(dest, s.path)) && !s.isDotfile
     })
-    .map(s => child.exec(`${execTag} --add ${[...tags, s.tags].join(",")} "${path.resolve(dest, s.path)}"`))
-)
+    .map(s => {
+        try {
+            child.exec(`${execTag} --add ${[...tags, s.tags].join(",")} "${path.resolve(dest, s.path)}"`)
+        } catch (e) {
+            console.log("ERROR WITH", s.path);
+            console.log(e);
+            console.log("————");
+        }
+    })
+).catch(e => {
+    console.log(e);
+    process.exit(1)
+})
 
 // for (const s of sTree) {
 //     const p = path.resolve(dest, s.path)
